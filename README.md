@@ -1,79 +1,166 @@
 # Multimodal Pediatric Sleep Stage Classification
 
-Official repository for the research article:
+## Official IEEE Repository Documentation
+
+This repository accompanies the IEEE research article:
 
 **An Ensemble Learning Framework for Pediatric Sleep Stage Classification Using Multimodal EEG–EOG Signals, Multi-Domain Features, and LIME-Based Explainability**
 
-(See full paper for methodological and experimental details.)
+It provides **full reproducibility**, **all experimental figures**, and **tabulated results** used in the paper.
 
 ---
 
-## Overview
-This repository contains the complete implementation, figures, tables, and results for a multimodal ensemble framework for pediatric sleep stage classification using EEG and EOG signals. The framework integrates robust preprocessing, multi-domain feature extraction, ensemble learning, and explainable AI (LIME).
+## 1. Repository Structure
 
-Key highlights:
-- Dataset: Nationwide Children’s Hospital Sleep Data Bank (NCHSDB)
-- Modalities: EEG (F4–M1), EOG (ROC–M1)
-- Features: 137 handcrafted (time, frequency, CWT, PSD)
-- Best model: Ensemble Bagging Decision Tree (EBDT2)
-- Accuracy: 99.96%, Weighted F1-score: 99.99%
-
----
-
-## Repository Structure
-- Code/: Source code for preprocessing, feature extraction, training, and evaluation
-- Dataset/: Dataset access instructions (raw PSG data not redistributed)
-- Figures/: All figures used in the paper
-- Results/: Confusion matrices and result tables
-- LICENSE: Apache 2.0
-- README.md: This file
+```
+Multimodal-Pediatric-Sleep-Stage-Classification/
+│
+├── Code/        # Source code for preprocessing, feature extraction, training, evaluation
+├── Dataset/     # Dataset access instructions (NCHSDB via NSRR/PhysioNet)
+├── Figures/     # All figures used in the IEEE paper (shown below)
+├── Results/     # Performance metrics and confusion matrices
+├── LICENSE      # Apache 2.0 License
+└── README.md    # This document
+```
 
 ---
 
-## Figures and Tables
-All figures and tables reported in the paper are provided in the Figures/ and Results/ directories, including:
-- Proposed methodology pipeline
-- EEG/EOG raw, filtered, and standardized epochs
-- SMOTE class balancing visualization
-- Multi-domain feature scatter plots
-- Confusion matrices of all models
-- LIME feature importance plots
-- Comparative tables with literature, runtime, error rates, and performance metrics
+## 2. Dataset Description
+
+- **Dataset:** Nationwide Children’s Hospital Sleep Data Bank (NCHSDB)
+- **Subjects:** Pediatric patients (≤ 10 years)
+- **Sampling Rate:** 256 Hz
+- **Epoch Length:** 30 seconds (AASM compliant)
+- **Sleep Stages:** Wake, N1, N2, N3, REM
+- **Signals Used:** EEG (F4–M1), EOG (ROC–M1)
+
+> ⚠️ Raw PSG data cannot be redistributed. Please request access via NSRR/PhysioNet.
 
 ---
 
-## Dataset
-- Source: NSRR / PhysioNet (NCHSDB)
-- Pediatric PSG recordings (≤10 years)
-- Sampling rate: 256 Hz
-- Sleep stages: Wake, N1, N2, N3, REM
+## 3. Methodology Overview
 
-Due to licensing restrictions, raw data are not included. Users must request access from NSRR.
+![Sleep Pipeline](Figures/sleep_pipeline.png)
+
+**Pipeline Steps**
+1. Channel selection (EEG + EOG)
+2. FIR band-pass filtering
+3. Epoch segmentation
+4. Feature standardization
+5. SMOTE class balancing
+6. Multi-domain feature extraction
+7. Ensemble learning
+8. Explainable AI (LIME)
 
 ---
 
-## Explainable AI
-LIME is used to provide local, model-agnostic explanations for ensemble predictions, highlighting the most influential EEG/EOG features contributing to each sleep-stage decision.
+## 4. Signal Preprocessing Visualization
+
+### EEG (F4–M1)
+
+- Raw Signal  
+![EEG Raw](Figures/EEG-F4-M1%20(raw-data)%20New.png)
+
+- Filtered Signal  
+![EEG Filtered](Figures/EEG-F4-M1%20(filtered)%20New.png)
+
+- Standardized Signal  
+![EEG Standardized](Figures/EEG-F4-M1%20(Standardized).png)
 
 ---
 
-## Citation
-If you use this repository, please cite:
+### EOG (ROC–M1)
 
+- Raw Signal  
+![EOG Raw](Figures/EOG-ROC-M1%20(raw-data)%20New.png)
+
+- Filtered Signal  
+![EOG Filtered](Figures/EOG-ROC-M1%20(filtered)%20New.png)
+
+- Standardized Signal  
+![EOG Standardized](Figures/EOG-ROC-M1%20(Standardized).png)
+
+---
+
+## 5. Class Imbalance Handling (SMOTE)
+
+- Before SMOTE  
+![SMOTE Before](Figures/smote%20Before.png)
+
+- After SMOTE  
+![SMOTE After](Figures/smote%20After.png)
+
+---
+
+## 6. Feature Extraction Visualizations
+
+### Temporal Features
+![Temporal Features](Figures/temporal%20features%20Scatter%20plot.png)
+
+### Spectral Features
+![Spectral Features](Figures/spectral%20features%20Scatter%20plot.png)
+
+### Normalized PSD Features
+![PSD Features](Figures/Norm%20PSDs%20features%20Scatter%20plot.png)
+
+### CWT Features (EEG & EOG)
+![CWT EEG](Figures/CWT%20EEG%20features%20Scatter%20plot.png)
+![CWT EOG](Figures/CWT%20EOG%20features%20Scatter%20plot.png)
+
+---
+
+## 7. Classification Results
+
+### Confusion Matrices
+![Confusion Matrices](Figures/confusion_matrices_highres.png)
+
+---
+
+## 8. Explainable AI (LIME)
+
+### LIME Feature Importance
+![LIME Scores](Figures/lime-score.png)
+
+LIME highlights entropy, spectral distribution, and PSD features as dominant contributors in sleep-stage prediction.
+
+---
+
+## 9. Performance Summary (From Paper)
+
+| Model | Accuracy (%) | Weighted F1 (%) |
+|------|-------------|-----------------|
+| Quadratic SVM | 82.64 | 83.00 |
+| Random Forest | 87.64 | 87.75 |
+| XGBoost | 88.89 | 88.99 |
+| EBDT v1 | 90.21 | 90.00 |
+| **EBDT v2 (Proposed)** | **99.96** | **99.99** |
+
+---
+
+## 10. License
+
+Licensed under **Apache 2.0** – free for academic and commercial use with attribution.
+
+---
+
+## 11. Citation
+
+```bibtex
 @article{PediatricSleep2026,
   title={An Ensemble Learning Framework for Pediatric Sleep Stage Classification Using Multimodal EEG--EOG Signals, Multi-Domain Features, and LIME-Based Explainability},
-  author={Khan, Hareem and Alkhrijah, Yazeed and Khan, Misha Urooj and Suleman, Ahmad and Faiz, Muhammad Abdullah Husnain Ali and Alawad, Mohamad A. and Kaleem, Zeeshan},
   journal={IEEE Access},
   year={2026}
 }
+```
 
 ---
 
-## License
-Apache License 2.0
+## 12. Contact
+
+**Corresponding Author:**  
+Zeeshan Kaleem, Senior Member IEEE  
+Email: zeeshankaleem@gmail.com
 
 ---
 
-## Acknowledgment
-This work is supported by the Deanship of Scientific Research at Imam Mohammad Ibn Saud Islamic University (IMSIU), Grant No. IMSIU-DDRSP2504.
-"""
+⭐ If this repository is useful, please consider starring it.
