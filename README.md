@@ -148,7 +148,7 @@ Licensed under **Apache 2.0** – free for academic and commercial use with attr
 ```bibtex
 @article{PediatricSleep2026,
   title={An Ensemble Learning Framework for Pediatric Sleep Stage Classification Using Multimodal EEG--EOG Signals, Multi-Domain Features, and LIME-Based Explainability},
-  journal={IEEE Access},
+  journal={IEEE},
   year={2026}
 }
 ```
