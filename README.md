@@ -1,131 +1,102 @@
-# Multimodal Pediatric Sleep Stage Classification
-
-## Official IEEE Repository Documentation
-
-This repository accompanies the IEEE research article:
-
-**An Ensemble Learning Framework for Pediatric Sleep Stage Classification Using Multimodal EEG–EOG Signals, Multi-Domain Features, and LIME-Based Explainability**
-
-It provides **full reproducibility**, **all experimental figures**, and **tabulated results** used in the paper.
 
 ---
 
-## 1. Repository Structure
+## 🧠 Dataset Description
 
-```
-Multimodal-Pediatric-Sleep-Stage-Classification/
-│
-├── Code/        # Source code for preprocessing, feature extraction, training, evaluation
-├── Dataset/     # Dataset access instructions (NCHSDB via NSRR/PhysioNet)
-├── Figures/     # All figures used in the IEEE paper (shown below)
-├── Results/     # Performance metrics and confusion matrices
-├── LICENSE      # Apache 2.0 License
-└── README.md    # This document
-```
-
----
-
-## 2. Dataset Description
-
-- **Dataset:** Nationwide Children’s Hospital Sleep Data Bank (NCHSDB)
+- **Dataset:** Nationwide Children’s Hospital Sleep Databank (NCHSDB)
 - **Subjects:** Pediatric patients (≤ 10 years)
-- **Sampling Rate:** 256 Hz
-- **Epoch Length:** 30 seconds (AASM compliant)
+- **Total PSG Studies:** 3,673
+- **Sampling Frequency:** 256 Hz
+- **Epoch Length:** 30 seconds (AASM standard)
 - **Sleep Stages:** Wake, N1, N2, N3, REM
-- **Signals Used:** EEG (F4–M1), EOG (ROC–M1)
+- **Signals Used:**  
+  - EEG: F4–M1  
+  - EOG: ROC–M1  
 
-> ⚠️ Raw PSG data cannot be redistributed. Please request access via NSRR/PhysioNet.
+⚠️ *Raw PSG data cannot be redistributed. Access is available via NSRR / PhysioNet.*
 
 ---
 
-## 3. Methodology Overview
+## 🔬 Methodology Overview
 
-![Sleep Pipeline](Figures/sleep_pipeline.png)
+<p align="center">
+  <img src="Figures/sleep_pipeline.png" width="750">
+</p>
 
-**Pipeline Steps**
-1. Channel selection (EEG + EOG)
+**Pipeline Stages**
+1. Multimodal channel selection (EEG + EOG)
 2. FIR band-pass filtering
-3. Epoch segmentation
-4. Feature standardization
-5. SMOTE class balancing
+3. AASM-compliant epoch segmentation
+4. Signal standardization
+5. SMOTE-based class balancing
 6. Multi-domain feature extraction
 7. Ensemble learning
 8. Explainable AI (LIME)
 
 ---
 
-## 4. Signal Preprocessing Visualization
+## 🧪 Signal Preprocessing Visualization
 
 ### EEG (F4–M1)
-
-- Raw Signal  
-![EEG Raw](Figures/EEG-F4-M1%20(raw-data)%20New.png)
-
-- Filtered Signal  
-![EEG Filtered](Figures/EEG-F4-M1%20(filtered)%20New.png)
-
-- Standardized Signal  
-![EEG Standardized](Figures/EEG-F4-M1%20(Standardized).png)
-
----
+| Raw | Filtered | Standardized |
+|-----|----------|--------------|
+| ![](Figures/EEG-F4-M1%20(raw-data)%20New.png) | ![](Figures/EEG-F4-M1%20(filtered)%20New.png) | ![](Figures/EEG-F4-M1%20(Standardized).png) |
 
 ### EOG (ROC–M1)
-
-- Raw Signal  
-![EOG Raw](Figures/EOG-ROC-M1%20(raw-data)%20New.png)
-
-- Filtered Signal  
-![EOG Filtered](Figures/EOG-ROC-M1%20(filtered)%20New.png)
-
-- Standardized Signal  
-![EOG Standardized](Figures/EOG-ROC-M1%20(Standardized).png)
+| Raw | Filtered | Standardized |
+|-----|----------|--------------|
+| ![](Figures/EOG-ROC-M1%20(raw-data)%20New.png) | ![](Figures/EOG-ROC-M1%20(filtered)%20New.png) | ![](Figures/EOG-ROC-M1%20(Standardized).png) |
 
 ---
 
-## 5. Class Imbalance Handling (SMOTE)
+## ⚖️ Class Imbalance Handling (SMOTE)
 
-- Before SMOTE  
-![SMOTE Before](Figures/smote%20Before.png)
+<p align="center">
+  <img src="Figures/smote%20Before.png" width="360">
+  <img src="Figures/smote%20After.png" width="360">
+</p>
 
-- After SMOTE  
-![SMOTE After](Figures/smote%20After.png)
-
----
-
-## 6. Feature Extraction Visualizations
-
-### Temporal Features
-![Temporal Features](Figures/temporal%20features%20Scatter%20plot.png)
-
-### Spectral Features
-![Spectral Features](Figures/spectral%20features%20Scatter%20plot.png)
-
-### Normalized PSD Features
-![PSD Features](Figures/Norm%20PSDs%20features%20Scatter%20plot.png)
-
-### CWT Features (EEG & EOG)
-![CWT EEG](Figures/CWT%20EEG%20features%20Scatter%20plot.png)
-![CWT EOG](Figures/CWT%20EOG%20features%20Scatter%20plot.png)
+SMOTE significantly improves minority N1 stage representation, enabling balanced model learning.
 
 ---
 
-## 7. Classification Results
+## 🧩 Feature Extraction (137 Features)
 
-### Confusion Matrices
-![Confusion Matrices](Figures/confusion_matrices_highres.png)
+<p align="center">
+  <img src="Figures/temporal%20features%20Scatter%20plot.png" width="700">
+</p>
+
+- **Time Domain:** 98 features  
+- **Frequency Domain:** 12 features  
+- **CWT Features:** 9 features  
+- **PSD Features:** 18 features  
+
+### Feature Visualizations
+- Temporal Features  
+- Spectral Features  
+- Normalized PSD Features  
+- CWT EEG & EOG Features  
+
+(All figures available in `/Figures`)
 
 ---
 
-## 8. Explainable AI (LIME)
+## 🧠 Classification Models Evaluated
 
-### LIME Feature Importance
-![LIME Scores](Figures/lime-score.png)
-
-LIME highlights entropy, spectral distribution, and PSD features as dominant contributors in sleep-stage prediction.
+- Logistic Regression  
+- Quadratic SVM  
+- Subspace k-NN  
+- Medium Neural Network  
+- Random Forest  
+- XGBoost  
+- Voting Classifier  
+- **EBDT v1**  
+- **EBDT v2 (Proposed)**  
+- Perceptron  
 
 ---
 
-## 9. Performance Summary (From Paper)
+## 🏆 Performance Summary (From Paper)
 
 | Model | Accuracy (%) | Weighted F1 (%) |
 |------|-------------|-----------------|
@@ -137,30 +108,45 @@ LIME highlights entropy, spectral distribution, and PSD features as dominant con
 
 ---
 
-## 10. License
+## 📊 Confusion Matrix
 
-Licensed under **Apache 2.0** – free for academic and commercial use with attribution.
+<p align="center">
+  <img src="Figures/confusion_matrices_highres.png" width="720">
+</p>
 
 ---
 
-## 11. Citation
+## 🔍 Explainable AI (LIME)
+
+<p align="center">
+  <img src="Figures/lime-score.png" width="720">
+</p>
+
+LIME reveals entropy, spectral distribution, and PSD features as dominant contributors to sleep stage decisions.
+
+---
+
+## ⚙️ Edge Deployment Analysis
+
+| Feature Config | Accuracy (%) | Latency (ms) | Memory (MB) |
+|---------------|-------------|--------------|-------------|
+| Full Features | 99.96 | 42 | 18.6 |
+| Feature Selection | 96.30 | 34 | 12.4 |
+| PCA Reduced | 97.90 | 28 | 9.8 |
+
+---
+
+## 📜 License
+
+This project is licensed under the **Apache License 2.0** – free for academic and commercial use with attribution.
+
+---
+
+## 📌 Citation
 
 ```bibtex
-@article{PediatricSleep2026,
-  title={An Ensemble Learning Framework for Pediatric Sleep Stage Classification Using Multimodal EEG--EOG Signals, Multi-Domain Features, and LIME-Based Explainability},
-  journal={IEEE},
+@article{Khan2026EEL,
+  title={Explainable Ensemble Learning on Multimodal Biosignals for Pediatric Sleep Stage Classification},
+  journal={IEEE Transactions on Biomedical and Health Informatics},
   year={2026}
 }
-```
-
----
-
-## 12. Contact
-
-**Corresponding Author:**  
-Zeeshan Kaleem, Senior Member IEEE  
-Email: zeeshankaleem@gmail.com
-
----
-
-⭐ If this repository is useful, please consider starring it.
